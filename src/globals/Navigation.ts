@@ -7,8 +7,8 @@ export const Navigation: GlobalConfig = {
     group: 'Site Settings',
   },
   access: {
-    read: () => true, // Frontend par menu render karne ke liye public
-  },
+    read: () => true, 
+   },
   fields: [
     {
       name: 'mainMenu',

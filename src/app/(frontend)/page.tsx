@@ -93,32 +93,56 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Products */}
-      <section className="max-w-7xl mx-auto px-4 py-12 mb-20">
-        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Featured Products</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.length > 0 ? (
-            products.map((product: any) => (
-              <div
-                key={product.id}
-                className="bg-white rounded-xl shadow-sm border p-4 flex flex-col justify-between"
-              >
-                <div>
-                  <h3 className="font-bold text-lg mb-2">{product.title}</h3>
-                  <p className="text-gray-600 font-semibold mb-4">${product.price}</p>
+     <section className="max-w-7xl mx-auto px-4 py-12 mb-20">
+  <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">Featured Products</h2>
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    {products.length > 0 ? (
+      products.map((product: any) => {
+        // Check karein ke product.image aur url mojood hai ya nahi
+        const imageUrl = product.images?.[0]?.url ? product.images[0].url : null
+
+        return (
+          <div
+            key={product.id}
+            className="group flex flex-col items-center bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-black"
+          >
+            {/* product Image */}
+            <div className="relative w-full h-48 rounded-lg overflow-hidden mb-3 bg-gray-100">
+              {imageUrl ? (
+              <img
+      src={imageUrl}
+      alt={product.image?.[0]?.alt || product.title}
+      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+    />
+              ) : (
+                <div className="flex items-center justify-center h-full text-gray-400 text-sm">
+                  No Image
                 </div>
-                <Link
-                  href={`/products/${product.slug}`}
-                  className="w-full bg-black text-white text-center py-2 rounded-lg hover:bg-gray-800 transition block"
-                >
-                  View Details
-                </Link>
-              </div>
-            ))
-          ) : (
-            <p className="col-span-full text-center text-gray-500">No products added yet.</p>
-          )}
-        </div>
-      </section>
+              )}
+            </div>
+
+            {/* product Title & Price */}
+            <h3 className="font-semibold text-gray-800 text-sm md:text-base text-center group-hover:text-black transition-colors line-clamp-1 mb-1">
+              {product.title}
+            </h3>
+            <h3 className="text-black font-bold mb-3">
+              {product.regularPrice || product.price} Pkr
+            </h3>
+
+            <Link
+              href={`/products/${product.slug}`}
+              className="w-full bg-black text-white text-center py-2 rounded-lg hover:bg-gray-800 transition block text-sm"
+            >
+              View Details
+            </Link>
+          </div>
+        )
+      })
+    ) : (
+      <p className="col-span-full text-center text-red-500">No products found.</p>
+    )}
+  </div>
+</section>
     </div>
   )
 }
